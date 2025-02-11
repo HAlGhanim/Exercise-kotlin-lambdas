@@ -2,7 +2,7 @@ fun main() {
     greetSeaCreatures()
     println(findPearl(6))
     println(divideTreasure(1000.0,5.0))
-    println(calculateDepth(1500, 800, ::depthDifference))
+    println(calculateDepth(1500, 800, depthDifference))
     println(diveMessage("deep sea"))
     exploreWaters {
         println("Exploring the unknown depths...")
@@ -26,7 +26,7 @@ fun calculateDepth(x: Int, y: Int, differenceFunction: (Int, Int) -> Int): Int {
     return differenceFunction(x, y)
 }
 
-fun depthDifference(x: Int, y: Int):Int = x-y
+val depthDifference: (Int, Int) -> Int = { x, y -> x-y }
 
 // Part 5 Extension Functions
 fun String.loud(): String {
