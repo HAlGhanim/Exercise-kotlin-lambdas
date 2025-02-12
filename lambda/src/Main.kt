@@ -4,8 +4,9 @@ fun main() {
     println(divideTreasure(1000.0,5.0))
     println(calculateDepth(1500, 800, depthDifference))
     println(diveMessage("deep sea"))
-    exploreWaters {
+    exploreWaters { start, end ->
         println("Exploring the unknown depths...")
+        end - start
     }
 }
 
@@ -35,23 +36,13 @@ fun String.loud(): String {
 
 val diveMessage: (String) -> String = {message -> message.loud()}
 
-/*
-Bonus Challenge: Lambda as an Inline Function – Exploring Uncharted Waters
-Step 1: Define an inline function named exploreWaters that takes a lambda function as a parameter.
-Step 2: Inside exploreWaters, record the start and end time of exploring uncharted waters, execute the lambda function, and print the time taken.
-Step 3: Call exploreWaters with a lambda that prints "Exploring the unknown depths...".
-Expected Output:
-Exploring the unknown depths...
-Time taken: X milliseconds
-*/
-
+// Bonus
 // I'm not entirely sure of my solution since inline has many syntaxes I just chose the simplest looking one
-// The wording of Step 2 implies performing the calculation then executing the lambda function which is why I opted using a Unit lambda function since it's not needed for the calculation
-inline fun exploreWaters(explore: () -> Unit) {
-    // Hardcoded the 50000 to simulate exploring the waters for 50 seconds
+// Used Long instead of Int because I got an error using Int since .currentTimeMillis() is a Long data Type
+
+inline fun exploreWaters(explore: (Long, Long) -> Long) {
     val startTime = System.currentTimeMillis()
-    val endTime = System.currentTimeMillis() + 50000
-    val duration = (endTime - startTime)
-    explore()
+    val endTime = System.currentTimeMillis() + 50000 // 50 seconds exploration
+    val duration = explore(startTime, endTime)  // HOF
     println("Time taken: $duration milliseconds")
 }
