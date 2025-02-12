@@ -1,13 +1,12 @@
+import kotlin.time.measureTime
+
 fun main() {
     greetSeaCreatures()
     println(findPearl(6))
     println(divideTreasure(1000.0,5.0))
     println(calculateDepth(1500, 800, depthDifference))
     println(diveMessage("deep sea"))
-    exploreWaters { start, end ->
-        println("Exploring the unknown depths...")
-        end - start
-    }
+    exploreWaters { println("Exploring the unknown depths...") }
 }
 
 // Part 1 with 2 solutions one is commented out. Used Unit because this lambda function has no parameters and it returns nothing.
@@ -40,9 +39,10 @@ val diveMessage: (String) -> String = {message -> message.loud()}
 // I'm not entirely sure of my solution since inline has many syntaxes I just chose the simplest looking one
 // Used Long instead of Int because I got an error using Int since .currentTimeMillis() is a Long data Type
 
-inline fun exploreWaters(explore: (Long, Long) -> Long) {
-    val startTime = System.currentTimeMillis()
-    val endTime = System.currentTimeMillis() + 50000 // 50 seconds exploration
-    val duration = explore(startTime, endTime)  // HOF
+inline fun exploreWaters(explore: () -> Unit) {
+    val duration = measureTime {
+        Thread.sleep(200)
+    }
+    explore()
     println("Time taken: $duration milliseconds")
 }
